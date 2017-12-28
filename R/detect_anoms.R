@@ -42,8 +42,9 @@ detect_anoms <- function(data, k = 0.49, alpha = 0.05, num_obs_per_period = NULL
                        s.window = "periodic", robust = TRUE)
     
     # Remove the seasonal component, and the median of the data to create the univariate remainder
-    data <- data.frame(timestamp = data[[1L]], count = (data[[2L]]-data_decomp$time.series[,"seasonal"]-median(data[[2L]])))
-    
+    data <- data.frame(timestamp = data[[1L]], count = (data[[2L]]-data_decomp$time.series[,"seasonal"]-data_decomp$time.series[,"trend"]))
+    # median(data[[2L]])  
+  
     # Store the smoothed seasonal component, plus the trend component for use in determining the "expected values" option
     data_decomp <- data.frame(timestamp=data[[1L]], count=(as.numeric(trunc(data_decomp$time.series[,"trend"]+data_decomp$time.series[,"seasonal"]))))
 
