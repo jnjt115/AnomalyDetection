@@ -40,7 +40,7 @@ detect_anoms <- function(data, k = 0.49, alpha = 0.05, num_obs_per_period = NULL
     # -- Step 1: Decompose data. This returns a univarite remainder which will be used for anomaly detection. Optionally, we might NOT decompose.
     data_decomp <- stl(ts(data[[2L]], frequency = num_obs_per_period),
                        s.window = "periodic", robust = TRUE)
-    
+    data_decomp$plot
     # Remove the seasonal component, and the median of the data to create the univariate remainder
     data <- data.frame(timestamp = data[[1L]], count = (data[[2L]]-data_decomp$time.series[,"seasonal"]-data_decomp$time.series[,"trend"]))
     # median(data[[2L]])  
